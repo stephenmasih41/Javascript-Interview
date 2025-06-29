@@ -415,3 +415,263 @@ function countChars(str) {
 }
 
 // console.log(countChars("Peggy Porth"));
+
+/*
+Problem 12:-
+Chef Mario's Recipe Book 
+Chef Mario was in the middle of writing his cookbook masterpiece
+when he spilled coffee on his keyboard! Now all his recipes have repeat
+ingredients.
+
+Help save Chef Mario's cookbook by writing a function that takes in an array 
+and returns a new array with all the duplicates removed. 
+
+Example input: ["🌈 rainbow", "🦄 unicorn", "🍭 lollipops", "🦄 unicorn", "🍭 lollipops"];
+Example output: ["🌈 rainbow", "🦄 unicorn", "🍭 lollipops"];
+*/
+
+const eggScrambleRecipe = [
+  "🥓 bacon",
+  "🥓 bacon",
+  "🍳 eggs",
+  "🫑 green peppers",
+  "🧀 cheese",
+  "🌶️ hot sauce",
+  "🥓 bacon",
+  "🥦 broccoli",
+  "🧀 cheese",
+  "🥦 broccoli",
+  "🌶️ hot sauce",
+];
+
+function removeDupesFromArray(arr) {
+  let newArr = [];
+  for (let item of arr) {
+    if (!newArr.includes(item)) {
+      newArr.push(item);
+    }
+  }
+  return newArr;
+}
+
+function removeDupesFromArray(arr) {
+  return [...new Set(arr)];
+}
+
+// console.log(removeDupesFromArray(eggScrambleRecipe));
+
+/* 
+Problem 13:-
+Scrimba mascot Pumpkin has won the grand prize at an international 
+cat show. Below are Pumpkin's scores from the judges, as well as all the 
+prizes he's won. In all the excitement of victory,
+they've become a jumbled mess of nested arrays. Let's 
+help Pumpkin by sorting it out. 
+
+Write a function to flatten nested arrays of strings or
+numbers into a single array. There's a method
+for this, but pratice both doing it manually and using the method. 
+
+Example input: [1, [4,5], [4,7,6,4], 3, 5]
+Example output: [1, 4, 5, 4, 7, 6, 4, 3, 5]
+*/
+
+const kittyScores = [
+  [39, 99, 76],
+  89,
+  98,
+  [87, 56, 90],
+  [96, 95],
+  40,
+  78,
+  50,
+  [63],
+];
+
+const kittyPrizes = [
+  ["💰", "🐟", "🐟"],
+  "🏆",
+  "💐",
+  "💵",
+  ["💵", "🏆"],
+  ["🐟", "💐", "💐"],
+  "💵",
+  "💵",
+  ["🐟"],
+  "🐟",
+];
+
+function flatten(arr) {
+  return arr.flat();
+}
+
+function flatten(arr) {
+  // initialize a new, empty array
+  // loop through the passed in array and check - string or array?
+  // if the item is string, push into the new array
+  // if the item is an array, loop through it, pushing each item into the array
+  // return new array
+
+  const newArr = [];
+
+  arr.forEach((element) => {
+    if (Array.isArray(element)) {
+      element.forEach((item) => newArr.push(item));
+    } else {
+      newArr.push(element);
+    }
+  });
+  return newArr;
+}
+
+// console.log(flatten(kittyPrizes));
+// console.log(flatten(kittyScores));
+
+/*
+Problem 14:-
+Alex from Scrimba wants to know how many new students have attended 
+Scrimba's weekly Town Hall event this year. 
+
+He has an array of first-time attendees for each month of the year. 
+Help him find the total number of attendees! Your function should
+take in an array and return a number representing the total number
+of new attendees. 
+
+Example input: [1,2,3]
+Example output: 6
+ */
+
+const studentCount = [50, 53, 61, 67, 60, 70, 78, 80, 80, 81, 90, 110];
+
+function sumArray(arr) {
+  let sum = 0;
+  for (let i = 0; i < studentCount.length; i++) {
+    sum += arr[i];
+  }
+  return sum;
+}
+
+// console.log(sumArray(studentCount));
+
+/* 
+Problem 15:-
+Pizza Night? 
+It's the weekend and you and your friends can't agree on 
+what to order for dinner, so you put it to a vote. 
+
+Write a function to find the food with the highest number of votes. 
+
+Your function should take in a food object and find the food
+with the most votes. It should log the winner, along with 
+how many votes it received.  
+
+Example input: {"🐈 cats": 19, "🐕 dogs": 17} 
+Example output: The winner is 🐈 cats with 19 votes!
+*/
+
+const gameNightFood = {
+  "🍕 pizza": 3,
+  "🌮 tacos": 10,
+  "🥗 salads": 7,
+  "🍝 pasta": 5,
+};
+
+function findTheWinner(obj) {
+  let maxVotes = 0;
+  let winner = "";
+
+  for (let food in obj) {
+    if (obj[food] > maxVotes) {
+      maxVotes = obj[food];
+      winner = food;
+    }
+  }
+  return `The winner is ${winner} with ${maxVotes} votes`;
+}
+
+// console.log(findTheWinner(gameNightFood));
+
+import podcasts from "./data.js";
+
+/* 
+Problem 16:-
+Find Free Podcasts 
+We have a list of podcasts and need the ability to filter by only
+podcasts which are free.
+
+Write a function that takes in the podcast data and returns an new
+array of only those podcasts which are free.
+
+Additionally, your new array should return only 
+objects containing only the podcast title, rating, and whether or 
+not it is paid. 
+
+Expected output: 
+[
+    {title: "Scrimba Podcast", rating: 10, paid: false}, 
+    {title: "Something about Witches", rating: 8, paid: false}, 
+    {title: "Coding Corner", rating: 9, paid: false}
+]
+*/
+// console.log(podcasts)
+function getFreePodcasts(data) {
+  return data
+    .filter((podcast) => podcast.paid === false)
+    .map((podcast) => ({
+      title: podcast.title,
+      rating: podcast.rating,
+      paid: podcast.paid,
+    }));
+}
+// console.log(getFreePodcasts(podcasts));
+
+import products from "./data.js";
+
+/*
+Problem 17:-
+   It's the day after Halloween 🎃 and all the candy is on sale!
+   
+   To buy up all the candy, use map() and filter() to put all the
+   candy into a `shoppingCart` array. 
+   
+   The new array should contain only the item and the price, like
+   this: 
+   
+   Expected output: 
+   [
+       {item: "🍭", price: 2.99},
+       {item: "🍫", price: 1.99}, 
+       {item: "🍬", price: 0.89}
+    ]
+*/
+
+function getSaleItems(data) {
+  return data
+    .filter((item) => item.type === "sweet")
+    .map((candy) => {
+      return {
+        item: candy.item,
+        price: candy.price,
+      };
+    });
+}
+// console.log(getSaleItems(products));
+
+import shoppingCart from "./data.js";
+
+/*  
+Problem 18:-
+Use reduce() to total the groceries. 
+Then find a method that will round the total to 2 decimal places.
+
+Example output: 73.44
+*/
+
+function total(arr) {
+  const some = arr.reduce((sum, item) => {
+    return sum + item.price;
+  }, 0);
+  return some.toFixed(2);
+}
+
+// console.log(total(shoppingCart));
