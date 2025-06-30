@@ -675,3 +675,275 @@ function total(arr) {
 }
 
 // console.log(total(shoppingCart));
+
+import shoppingCart from "./data.js";
+
+/*
+Problem 19:-
+Use reduce() and only reduce() to calculate and return 
+the total cost of only the savory
+items in the shopping cart.
+
+Expected output: 9.97  
+*/
+
+function totalSavory(arr) {
+  const some = arr.reduce((acc, item) => {
+    return item.type === "savory" ? acc + item.price : acc;
+  }, 0);
+  return some;
+}
+
+// console.log(totalSavory(shoppingCart));
+
+import products from "./data.js";
+
+/*
+Problem 20:-
+    You're online shopping for holiday gifts, but money is tight
+    so we need to look at the cheapest items first. 
+    Use the built in sort() method to write a function that returns a new array of
+    products sorted by price, cheapest to most expensive. 
+    
+    Then log the item and the price to the console: 
+    
+    💕,0
+    🍬,0.89
+    🍫,0.99
+    🧁,0.99
+    📚,0.99
+    ... continued
+*/
+
+function sortProducts(data) {
+  const sorted = [...data].sort((a, b) => a.price - b.price);
+  return sorted;
+}
+
+const listByCheapest = sortProducts(products);
+listByCheapest.forEach((item) => {
+  console.log(`${item.product}, ${item.price}`);
+});
+
+import mediaData from "./data.js";
+
+/* 
+Problem 21:-
+Find All Unique Tags 
+As a software dev at ScrimFlix, you're working on a feature 
+to let users browse TV shows by tag. The first step is to collect all 
+the tags from our data into a new array. Then we'll need 
+to filter out the duplicate tags. 
+
+Write a function that takes in the media data and returns
+a flat array of unique tags.
+
+Expected output: 
+["supernatural", "horror", "drama",
+"fantasy", "reality", "home improvement", "comedy", "sci-fi", "adventure"]
+
+*/
+
+function getUniqueTags(data) {
+  const tags = data.flatMap((item) => item.tags);
+  return [...new Set(tags)];
+}
+// console.log(mediaData)
+// console.log(getUniqueTags(mediaData));
+
+// Alternative solution for Problem 21:-
+function getUniqueTags(data) {
+  const tags = data.map((podcast) => podcast.tags).flat();
+  const uniqueTags = {};
+
+  // filter tags arr
+  return tags.filter((tag) => {
+    // look up the tag in the uniqueTags obj
+    if (!uniqueTags[tag]) {
+      uniqueTags[tag] = true;
+      // if it's not the, we have a unique item
+      // put the item in our object with a value of true
+      return true;
+    }
+    return false;
+  });
+}
+
+import podcasts from "./data.js";
+
+/* 
+Problem 22:-
+Welcome Aboard Scrimba Airlines 
+
+Our Scrimba Airlines in-flight entertainment package 
+includes a variety of podcasts. We need to add a feature that suggests
+podcasts to our patrons based on whether a flight is short or long. 
+
+Your sort function should take two arguments: the podcast data and
+flight length. If the flight is 60 minutes or less, sort the podcast list 
+from shortest to longest. If it's anything else, sort from longest
+to shortest. 
+
+Your function shouldn't return anything. Instead log a numbered list 
+of the title and duration of 
+each podcast to the console, like this:
+
+1. Crime Fan, 150 minutes
+2. Mythical Creatures, 99 minutes
+3. Crime Crime Crime, 70 minutes
+4. Coding Corner, 55 minutes
+5. Scrimba Podcast, 50 minutes
+6. Something about Witches, 35 minutes
+
+*/
+// console.log(podcasts)
+function sortByDuration(data, flightLength) {
+  const sorted = [...data].sort((a, b) => {
+    return flightLength <= 60
+      ? a.duration - b.duration
+      : b.duration - a.duration;
+  });
+  sorted.forEach((podcast, index) => {
+    console.log(`${index + 1}. ${podcast.title}, ${podcast.duration} minutes`);
+  });
+}
+
+sortByDuration(podcasts, 60);
+
+import postData from "./data.js";
+
+/* 
+Problem 23:-
+Popularity Contest 
+
+Iggy the Influencer and Toby the Tiktoker are dying to know
+who's more popular on social media. 
+
+Toby's TikToks get an average of 400 likes. On average, how many
+likes do Iggy's Instagram posts get? 
+
+In data.js you'll find a list of Iggy's recent posts. 
+Use reduce() to write a function that returns the average number of likes.
+To find the average, add up the total number of likes, then divide
+by the total number of posts.
+*/
+
+function calcAverageLikes(data) {
+  const totalLikes = data.reduce((acc, curr) => {
+    return acc + curr.likes;
+  }, 0);
+  const totalPosts = data.length;
+
+  const average = (totalLikes / totalPosts).toFixed(2);
+  return average;
+}
+
+// console.log(calcAverageLikes(postData));
+
+import podcasts from "./data.js";
+
+/* 
+Problem 24:-
+Night at the Scrimbies 
+
+It's time for the Scrimbies, a prestigious award show for podcast hosts.
+We need to assemble a list of podcast hosts so we can start handing out awards. 
+
+Write a function that takes in the podcast data and
+returns a flat array of podcast hosts. There are quite a few ways to approach
+this, but try solving the problem using reduce(). 
+
+Once you have a flat array of hosts, write a second function to randomly assign each host a prize
+from the awards array. 
+
+Example output: ["🏆 Alex Booker", "⭐ Bob Smith", "💎 Camilla Lambert" ...] 
+
+*/
+const awards = ["🏆", "⭐", "💎", "🥇", "👑"];
+function getHosts(data) {
+  return data.flatMap((item) => item.hosts);
+}
+
+function assignAwards(data) {
+  const allHosts = getHosts(data);
+  return allHosts.map((host) => {
+    return awards[Math.floor(Math.random() * awards.length)] + host;
+  });
+}
+
+// console.log(getHosts(podcasts));
+// console.log(assignAwards(podcasts));
+
+// Alternative solution for Problem 24:-
+function getHosts(data) {
+  // reduce the podcasts data down to a list of hosts
+  return data.reduce((acc, curr) => {
+    // add curr.hosts to the acc array
+    return acc.concat(curr.hosts);
+  }, []);
+}
+
+function assignAwards(data) {
+  // use getHosts() to get a flat array of podcasts hosts
+  const hosts = getHosts(data);
+  // map through my array of hosts. for each:
+  return hosts.map((host) => {
+    // use Math.random to generate a rand num between 0 and length of award arr
+    const randIndex = Math.floor(Math.random() * awards.length);
+    // use the rand num to access a random award index
+    // use string literal to concast a random award to each host
+    return `${awards[randIndex]} ${host}`;
+  });
+}
+
+import podcasts from "./data.js";
+
+/* 
+Problem 25:-
+🌴 Save the Weekend 🌴
+
+Your best friend is a copywriter who writes product descriptions 
+for a living. You want to use your hacking skills to help them 
+automate their job so you both can spend the weekend on a 
+tropical island. 
+
+Use array methods and the existing podcast data to write a function that
+can generate a description for each podcast. 
+
+Add the description as a new property on each podcast object, and return
+a new podcast array where each podcast has a description. 
+
+Each description should look like this: 
+[
+    {
+        id: 1,
+        title: "Scrimba Podcast", 
+        ...
+        description: "Scrimba Podcast is a 50 minute education podcast hosted 
+        by Alex Booker."
+    }
+    ...
+]
+
+If the podcast has more than one host, you can display only the first host.
+
+Stretch goal: Display all three hosts in the description, seperated with commas: 
+
+Example description: "Coding Corner is a 55 minute education podcast hosted by Treasure Porth, Guil Hernandez, and Tom Chant."
+*/
+
+function createDescriptionsFor(data) {
+  return data.map((podcast) => {
+    const { title, duration, genre, hosts } = podcast;
+    const totalHosts =
+      hosts.length === 1
+        ? `hosted by ${hosts[0]}`
+        : `hosted by ${hosts.join(" , ")}`;
+    return {
+      ...podcast,
+      description: `${title} is a ${duration} minute ${genre} podcast hosted by ${totalHosts}.`,
+    };
+  });
+}
+
+// console.log(createDescriptionsFor(podcasts));
