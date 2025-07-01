@@ -947,3 +947,90 @@ function createDescriptionsFor(data) {
 }
 
 // console.log(createDescriptionsFor(podcasts));
+
+/* 
+Problem 26:-
+Find anagrams in an array   
+
+When two words have the exact same letters, they are anagrams. 
+
+Each item in the anagrams array is an anagram of a Scrimba teacher's
+first and last name, plus the phrase "Scrimba teacher". 
+
+Write a function to determine which strings in the array are 
+anagrams of "Bob Ziroll Scrimba Teacher".
+
+Your function should take two parameters: the phrase you want to compare to
+the anagrams, and an array of anagrams. The function should return
+a new array of anagrams that match the phrase. 
+
+Example input: treat, ["tater", "tree", "teart", "tetra", "heart", "hamster"]
+Example output: ["tater", "teart", "tetra"]
+
+Bonus: What other teachers are represented in these anagrams? 
+ */
+
+const anagrams = [
+  "moz biblical torchbearers",
+  "it's razorbill beachcomber",
+  "och mcrobbie trailblazers",
+  "bib chorizo cellarmaster",
+  "thor scribble carbimazole",
+  "zilla borscht abercrombie",
+  "brazil scorcher batmobile",
+  "dame shelburne characterizing",
+  "uber englishman characterized",
+  "agnes rhumbline characterized",
+  "rehab scrutinized charlemagne",
+  "dreams zurich interchangeable",
+  "bam hamster technocratic",
+  "mechatronic masterbatch",
+  "bam ratchet mechatronics",
+];
+
+function sortPhrase(phrase) {
+  return phrase.toLowerCase().split("").sort().join("").trim();
+}
+
+function isAnagramInArray(anagram, arr) {
+  // use .filter()
+  // use sortPhrase() to sort both the input phrase and the current phrase in the array
+  // compare the two words to return true or false
+  return arr.filter((item) => {
+    const word1 = sortPhrase(anagram);
+    const word2 = sortPhrase(item);
+
+    return word1 === word2;
+  });
+}
+
+// console.log(isAnagramInArray("Bob Ziroll Scrimba Teacher", anagrams));
+
+/*
+Problem 27:-
+   Oh no, our emoji flower bed is infested with mammals, trees and leaves!
+   Without changing the API url, write a function to transform your 
+   data before it's displayed. The function should eliminate
+   everything but bugs and flowers. Use your function in the API call.  
+   
+   Hint: Be sure to console the data to see what properties can help you do this!
+*/
+
+const api =
+  "https://apis.scrimba.com/emojihub/api/all/category/animals-and-nature";
+const flowerBed = document.querySelector(".emoji-flower-bed");
+
+function clearTheGarden(arr) {
+  return arr.filter(
+    (emoji) => emoji.group === "animal bug" || emoji.group === "plant flower"
+  );
+}
+
+fetch(api)
+  .then((response) => response.json())
+  .then((data) => {
+    clearTheGarden(data).forEach((emoji) => {
+      flowerBed.innerHTML += `<li>${emoji.htmlCode}</li>`;
+    });
+  })
+  .catch((err) => console.log(err));
